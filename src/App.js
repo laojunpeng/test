@@ -3,26 +3,27 @@ import { BrowserRouter, Switch } from 'react-router-dom'
 import routes from './router'
 import authRouter from '@/utils/authRoute'
 
+import { connect } from 'react-redux' //引入连接器
+
+function mapState(state) {
+  return {
+    isLogin: state.account.isLogin,
+  }
+}
+
 class App extends React.Component {
   render() {
+    const isLogin = this.props.isLogin
+    console.info(isLogin);
     return (
       <BrowserRouter>
         <Switch>
           {routes.map(({ component: Component, ...rest }, index) => {
-            return authRouter({key:index, path: rest.path, exact: rest.exact, children: rest.routes, component: Component })
-            // <Route
-            //   key={index}
-            //   path={rest.path}
-            //   exact={rest.exact}
-            //   render={(routeProps: any) => {
-            //     return <Component routes={rest.routes} {...routeProps} />
-            //     // return authRouter({})
-            //   }}
-            // />
+            return authRouter({ isLogin, key: index, ...rest, component: Component })
           })}
         </Switch>
       </BrowserRouter>
     )
   }
 }
-export default App
+export default connect(mapState)(App)
