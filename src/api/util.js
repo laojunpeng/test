@@ -20,11 +20,6 @@ instance.interceptors.request.use(
     // 在发送请求之前做些什么
     const { auth } = store.getState() 
     config.headers = Object.assign({}, config.headers, auth.headerInfo)
-    // let token = VueCookie.get(AppUtil.KEYS['TOKEN' + config.headers.appId])
-    // config.headers.token = token
-    // if (config.headers.authorization == '') {
-    //   delete config.headers.authorization
-    // }
     return config
   },
   function (error) {

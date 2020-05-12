@@ -12,4 +12,4 @@ export const getResult = async ({ status, data, config }, instance) => {
   }
 }
 
-const tips = new WeakMap([[ErrorCode.INVAILD_TOKEN, {toast:false, msg:'无效token'}]])
+const tips = new Map([[ErrorCode.INVAILD_TOKEN, {toast:false, msg:'无效token'}]])
