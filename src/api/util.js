@@ -2,15 +2,21 @@ import axios from 'axios'
 import store from '@/store'
 import { Auth as AuthActions } from '@/store/actions'
 import { CODE as ErrorCode } from '@/utils/error'
-import {getResult} from './resultHandler'
+import { getResult } from './resultHandler'
+import QueueLoading from '@/utils/queueLoading'
 
 const instance = axios.create()
+const queueLoading = new QueueLoading()
 
 instance.interceptors.response.use(
   async (response) => {
-    return getResult(response,instance)
+    const { setting } = response.config
+    queueLoading.removeRequest(setting?.loading)
+    return getResult(response, instance)
   },
   (error) => {
+    const { setting } = error.response.config
+    queueLoading.removeRequest(setting?.loading)
     return Promise.reject(error.response)
   },
 )
@@ -18,8 +24,10 @@ instance.interceptors.response.use(
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
-    const { auth } = store.getState() 
+    const { auth } = store.getState()
     config.headers = Object.assign({}, config.headers, auth.headerInfo)
+    const { setting } = config
+    queueLoading.addRequest(setting?.loading)
     return config
   },
   function (error) {
@@ -30,7 +38,7 @@ instance.interceptors.request.use(
 )
 
 function createAPI(baseURL) {
-  return function (conf={}) {
+  return function (conf = {}) {
     return instance(
       Object.assign(
         {},

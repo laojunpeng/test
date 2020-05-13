@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 }
 let reducers = {}
 reducers[Auth.UPDATE_TOKEN] = function (state, action) {
-  const token = action.payload.token.value
+  const token = action.payload?.data?.token?.value
   const headerInfo = Object.assign({}, state.headerInfo, { token })
   setToken(state.headerInfo.appId, token)
   return { ...state, headerInfo }

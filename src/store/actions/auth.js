@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions'
 import { Auth } from '@/store/constants'
 
 import * as api from '@/api'
-  
+
 // export const updateHeaderInfo = createAction(Auth.UPDATE_HEADER_INFO, (headerInfo) => ({ headerInfo }))
 export const updateAppId = createAction(Auth.UPDATE_APP_ID, (appId) => appId)
 export const updateToken = createAction(Auth.UPDATE_TOKEN, async () => {
@@ -17,5 +17,6 @@ export const updateToken = createAction(Auth.UPDATE_TOKEN, async () => {
       appId: '10000',
     },
   })
+  console.info(result)
   return result
 })

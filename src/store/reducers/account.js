@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 }
 let reducers = {}
 reducers[Account.UPDATE_USER_INFO] = function (state, action) {
-  let { user } = action.payload
+  let user = action.payload
   let isLogin = isEmpty(user)
   return { ...state, user, isLogin }
 }

@@ -28,8 +28,7 @@ class Login extends React.Component {
     // console.info(store);
     // this.props.updateAccessToken()
     // this.props.history.push('/production')
-    api.account_v1_sms_login_post({data:{ phoneNum: '13427588352', smsCode: '.#18' }}).then((e) => {
-      console.log(e)
+    api.account_v1_sms_login_post({ setting: { loading: true }, data: { phoneNum: '13427588352', smsCode: '.#18' } }).then((e) => {
     })
     // throw new Error()
   }
