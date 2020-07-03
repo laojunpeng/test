@@ -1,40 +1,75 @@
-import * as React from 'react'
-import { connect } from 'react-redux' //引入连接器
-import { bindActionCreators } from 'redux'
-import { Account as AccountActions, Auth as AuthActions } from '@/store/actions'
-import * as api from '@/api'
+import React, { useState } from 'react';
+import { connect } from 'react-redux'; //引入连接器
+import { bindActionCreators } from 'redux';
+import { Account as AccountActions } from '@/store/actions';
+import * as api from '@/api';
+import styled from '@/utils/styled-px2vw';
+import { Base64 } from 'js-base64';
+import { CusButton } from '@/components/common/button/index';
+import { CusInput } from '@/components/common/input/index';
 
-function mapState(state) {
+function mapStateToProps(state) {
   return {
     user: state.account.user,
-  }
+  };
 }
-function mapDispatch(dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ ...AccountActions, ...AuthActions }, dispatch),
-  }
+    ...bindActionCreators({ ...AccountActions }, dispatch),
+  };
 }
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: 'aaaa',
+function Login(props) {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = () => {
+    let submitPassword = Base64.encode('@GZzib!' + password);
+    api.account_v1_login_post({ setting: { loading: true }, data: { phoneNum: userName, passwd: submitPassword } }).then(({ data: { user } }) => {
+      props.updateUserInfo(user);
+    });
+  };
+  const inputHandleChange = (name, value) => {
+    switch (name) {
+      case 'userName':
+        setUserName(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      default:
     }
-    this.setName = this.setName.bind(this)
-  }
-  setName = () => {
-    // this.props.updateUser({ name: '12312375895' })
-    // console.info(store);
-    // this.props.updateAccessToken()
-    // this.props.history.push('/production')
-    api.account_v1_sms_login_post({ setting: { loading: true }, data: { phoneNum: '13427588352', smsCode: '.#18' } }).then((e) => {
-    })
-    // throw new Error()
-  }
-  render() {
-    return <div onClick={this.setName}>{JSON.stringify(this.props.user)}</div>
-  }
+  };
+  return (
+    <Container className='login'>
+      <Title>账号密码登录</Title>
+      <CusInput style={CusInputCss} value={userName} handleChange={inputHandleChange.bind(this, 'userName')} title='用户名' placeholder='请输入用户名'></CusInput>
+      <CusInput style={CusInputCss} value={password} handleChange={inputHandleChange.bind(this, 'password')} title='密码' placeholder='请输入密码'></CusInput>
+      <CusButton onClick={login} type='primary'>
+        登录
+      </CusButton>
+    </Container>
+  );
 }
 
-export default connect(mapState, mapDispatch)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 30px;
+  box-sizing: border-box;
+`;
+const Title = styled.h1`
+  color: #4e9df6;
+  font-size: 30px;
+  font-weight: bold;
+  padding-bottom: 48px;
+`;
+
+const CusInputCss = {
+  marginBottom: '20px',
+};

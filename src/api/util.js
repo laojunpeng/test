@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from '@/store'
+import {store} from '@/store'
 import { Auth as AuthActions } from '@/store/actions'
 import { CODE as ErrorCode } from '@/utils/error'
 import { getResult } from './resultHandler'

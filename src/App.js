@@ -14,7 +14,6 @@ function mapState(state) {
 class App extends React.Component {
   render() {
     const isLogin = this.props.isLogin
-    console.info(isLogin);
     return (
       <BrowserRouter>
         <Switch>

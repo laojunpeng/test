@@ -1,1 +1,1 @@
-export const UPDATE_USER = 'account/updateUser'
+export const UPDATE_USER_INFO = 'account/updateUserInfo'

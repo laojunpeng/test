@@ -17,6 +17,5 @@ export const updateToken = createAction(Auth.UPDATE_TOKEN, async () => {
       appId: '10000',
     },
   })
-  console.info(result)
   return result
 })

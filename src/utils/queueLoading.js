@@ -1,4 +1,4 @@
-import store from '@/store'
+import {store} from '@/store'
 import { Common as CommonActions } from '@/store/actions'
 
 export default class QueueLoading {

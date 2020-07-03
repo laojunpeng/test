@@ -1,6 +1,6 @@
-import User from '@/view/user/index'
-import Production from '@/view/production/index'
-import Login from '@/view/auth/login'
+import User from '@/view/user/index';
+import Production from '@/view/production/index';
+import Login from '@/view/auth/login';
 
 let router = [
   {
@@ -37,6 +37,6 @@ let router = [
     path: '/', //首页默认加载的页面
     component: User,
   },
-]
+];
 
-export default router
+export default router;
