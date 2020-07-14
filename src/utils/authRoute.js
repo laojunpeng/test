@@ -1,11 +1,9 @@
 /* 鉴权路由 */
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-
+import { Route, Redirect } from 'react-router-dom';
 /* 函数组件 */
 function AuthRoute({ key, isLogin, path, exact, routes, meta = {}, component:DefaultComponent }) {
   const { needAuth } = meta
-
   return (
     <Route
       exact={exact}

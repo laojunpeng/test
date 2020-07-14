@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { connect } from 'react-redux'; //引入连接器
 import { bindActionCreators } from 'redux';
-import { Account as AccountActions } from '@/store/actions';
+import { Account as AccountActions, Auth as AuthActions } from '@/store/actions';
 import * as api from '@/api';
 import styled from '@/utils/styled-px2vw';
 import { Base64 } from 'js-base64';
@@ -10,23 +10,24 @@ import { CusInput } from '@/components/common/input/index';
 
 function mapStateToProps(state) {
   return {
-    user: state.account.user,
+    user: state.account.user
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ ...AccountActions }, dispatch),
+    ...bindActionCreators({ ...AccountActions,...AuthActions }, dispatch),
   };
 }
 
 function Login(props) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
   const login = () => {
     let submitPassword = Base64.encode('@GZzib!' + password);
-    api.account_v1_login_post({ setting: { loading: true }, data: { phoneNum: userName, passwd: submitPassword } }).then(({ data: { user } }) => {
+    api.account_v1_login_post({ setting: { loading: true }, data: { phoneNum: userName, passwd: submitPassword } }).then(({ data: { user,accessToken } }) => {
       props.updateUserInfo(user);
+      props.updateAuthorization(accessToken)
+      props.location.state.from&&props.history.replace(props.location.state.from.pathname+props.location.state.from.search)
     });
   };
   const inputHandleChange = (name, value) => {

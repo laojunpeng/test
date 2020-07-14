@@ -13,5 +13,12 @@ module.exports = function (app) {
       secure: false,
       changeOrigin: true,
     }),
+  ),
+  app.use(
+    createProxyMiddleware('/device', {
+      target: 'http://dev.cloud.zhibankeji.com',
+      secure: false,
+      changeOrigin: true,
+    }),
   )
 }

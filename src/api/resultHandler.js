@@ -9,7 +9,7 @@ export const getResult = async ({ status, data, config }, instance) => {
       return data;
     }
     if (data.code === ErrorCode.INVAILD_TOKEN) {
-      await store.dispatch(AuthActions.updateToken());
+      await store.dispatch(AuthActions.updateToken(config.headers.appId));
       return instance(config);
     }
   }
