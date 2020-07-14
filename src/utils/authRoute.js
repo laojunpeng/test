@@ -1,9 +1,11 @@
 /* 鉴权路由 */
-import React from 'react'
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import withRouterEnter from './withRouterEnter';
+
 /* 函数组件 */
-function AuthRoute({ key, isLogin, path, exact, routes, meta = {}, component:DefaultComponent }) {
-  const { needAuth } = meta
+function AuthRoute({ key, isLogin, path, exact, routes, meta = {}, component: DefaultComponent }) {
+  const { needAuth } = meta;
   return (
     <Route
       exact={exact}
@@ -19,11 +21,12 @@ function AuthRoute({ key, isLogin, path, exact, routes, meta = {}, component:Def
                   from: props.location, // 记录当前页面
                 },
               }}></Redirect>
-          )
+          );
         } else {
-          return <DefaultComponent {...props} routes={routes}></DefaultComponent>
+          const WithRouterEnter = withRouterEnter(DefaultComponent, routes, props);
+          return <WithRouterEnter></WithRouterEnter>
         }
       }}></Route>
-  )
+  );
 }
-export default AuthRoute
+export default AuthRoute;
