@@ -7,12 +7,14 @@ import styled from '@/utils/styled-px2vw';
 import { Base64 } from 'js-base64';
 import { CusButton } from '@/components/common/button/index';
 import { CusInput } from '@/components/common/input/index';
+import { CusFormItem } from '@/components/common/form/index';
 
 function mapStateToProps(state) {
   return {
     user: state.account.user,
   };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators({ ...AccountActions }, dispatch),
@@ -22,7 +24,6 @@ function mapDispatchToProps(dispatch) {
 function Login(props) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
   const login = () => {
     let submitPassword = Base64.encode('@GZzib!' + password);
     api.account_v1_login_post({ setting: { loading: true }, data: { phoneNum: userName, passwd: submitPassword } }).then(({ data: { user } }) => {
@@ -43,7 +44,9 @@ function Login(props) {
   return (
     <Container className='login'>
       <Title>账号密码登录</Title>
-      <CusInput style={CusInputCss} value={userName} handleChange={inputHandleChange.bind(this, 'userName')} title='用户名' placeholder='请输入用户名'></CusInput>
+      <CusFormItem rule={{ required: true, message: '请输入活动名称', trigger: 'blur' }} >
+        <CusInput style={CusInputCss}  value={userName} handleChange={inputHandleChange.bind(this, 'userName')} title='用户名' placeholder='请输入用户名'></CusInput>
+      </CusFormItem>
       <CusInput style={CusInputCss} value={password} handleChange={inputHandleChange.bind(this, 'password')} title='密码' placeholder='请输入密码'></CusInput>
       <CusButton onClick={login} type='primary'>
         登录
