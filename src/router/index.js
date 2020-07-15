@@ -1,8 +1,17 @@
 import User from '@/view/user/index';
 import Production from '@/view/production/index';
 import Login from '@/view/auth/login';
+import Join from '@/view/family/join';
+
 
 let router = [
+  {
+    path: '/family/join', 
+    component: Join,
+    meta: {
+      needAuth: true,
+    },
+  },
   {
     meta: {
       needAuth: true,

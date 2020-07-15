@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@/utils/styled-px2vw';
+import { useEffect } from 'react';
 
 function Index({ type = 'text',style, title, prepend, icon,...otherProps }) {
   const handleChange = function (e,...test) {
@@ -7,6 +8,7 @@ function Index({ type = 'text',style, title, prepend, icon,...otherProps }) {
   };
   const handleFocus = function () {};
   const handleBlur = function () {};
+
   return (
     <CusInput style={style}>
       {typeof title === 'string' ? <Title>{title}</Title> : title}

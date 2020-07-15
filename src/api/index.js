@@ -1,6 +1,60 @@
 import instance from './instance';
 import { convertRESTAPI } from './util';
 
+/** 创建绑定设备信息(只支持终端授权方式) */
+function api_v3_device_info_post(opts) {
+  return instance({
+    method: "post",
+    url: "/api/v3/device/info",
+    opts: opts
+  })
+}
+
+/** 根据条件查询绑定设备信息 */
+function api_v3_device_info_search_post(opts) {
+  return instance({
+    method: 'post',
+    url: '/api/v3/device/info/search',
+    opts: opts
+  })
+}
+
+/** 根据条件查询绑定设备信息是否存在 */
+function api_v3_device_info_search_exists_post(opts) {
+  return instance({
+    method: "post",
+    url: "/api/v3/device/info/search/exists",
+    opts: opts
+  });
+}
+
+/** 获取绑定设备的成员数量*/
+function api_v3_device_info_members_total_deviceId_get(opts) {
+  return instance({
+    method: 'get',
+    url: convertRESTAPI('/api/v3/device/info/members/total/{deviceId}', opts),
+    opts: opts
+  })
+}
+
+/** 查询设备信息*/
+function device_v1_info_sn_sn_get(opts) {
+  return instance({
+    method: 'get',
+    url: convertRESTAPI('/device/v1/info/sn/{sn}', opts),
+    opts: opts
+  })
+}
+
+/** 查询绑定设备的全部用户的信息 */
+function api_v3_device_info_members_deviceId_post(opts) {
+  return instance({
+    method: "get",
+    url: convertRESTAPI("/api/v3/device/info/members/{deviceId}",opts),
+    opts: opts
+  });
+}
+
 /** 获取用户下级(粉丝) */
 function account_v1_user_chain_junior_phoneNum_get(opts) {
   return instance({
@@ -1505,6 +1559,12 @@ function payment_v1_goods_app_list_get(opts) {
 }
 
 export {
+  api_v3_device_info_post,
+  api_v3_device_info_search_post,
+  api_v3_device_info_search_exists_post,
+  api_v3_device_info_members_total_deviceId_get,
+  device_v1_info_sn_sn_get,
+  api_v3_device_info_members_deviceId_post,
   account_v1_user_chain_junior_phoneNum_get,
   account_v1_user_chain_move_post,
   account_v1_user_chain_superior_phoneNum_post,

@@ -24,4 +24,10 @@ reducers[Auth.UPDATE_APP_ID] = function (state, action) {
   const headerInfo = Object.assign({}, state.headerInfo, { appId, token })
   return { ...state, headerInfo }
 }
+
+reducers[Auth.UPDATE_ACCESS_TOKEN] = function (state, action){
+  const authorization = action.payload
+  const headerInfo = Object.assign({}, state.headerInfo, { authorization })
+  return { ...state, headerInfo }
+}
 export default handleActions(reducers, INITIAL_STATE)
