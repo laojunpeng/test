@@ -2,28 +2,26 @@ import * as React from 'react'
 import { BrowserRouter, Switch, withRouter, Route  } from 'react-router-dom'
 import routes from './router'
 import authRouter from '@/utils/authRoute'
-import { connect } from 'react-redux' //引入连接器
-import {store} from '@/store'
-import { Auth as AuthActions } from '@/store/actions';
+import { connect } from 'react-redux'; //引入连接器
+import { bindActionCreators } from 'redux';
+import { Account as AccountActions, Auth as AuthActions } from '@/store/actions';
 
-function mapState(state) {
+function mapStateToProps(state) {
   return {
+    user: state.account.user,
     isLogin: state.account.isLogin,
-  }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({ ...AccountActions,...AuthActions }, dispatch),
+  };
 }
 
 class App extends React.Component {
-  componentDidMount(){
-    //判断初始加载路由路径
-  console.info("判断初始加载路由路径")
- }
-
- componentWillReceiveProps(nextProps){
-  //路由变化时判断
-  console.info(nextProps,"nextProps")
-
-}
   render() {
+    console.info(this.props.isLogin);
     const isLogin = this.props.isLogin;
     return (
       <BrowserRouter>
@@ -36,4 +34,5 @@ class App extends React.Component {
     )
   }
 }
-export default connect(mapState)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
